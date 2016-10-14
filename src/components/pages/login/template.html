@@ -1,0 +1,43 @@
+<div class="page page--login">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <form name="auth" class="form-horizontal from--auth" ng-submit="$ctrl.submit()">
+                        <fieldset>
+                            <legend>Авторизация</legend>
+                            
+                            <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('email') }">
+                                <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="inputEmail" name="email" placeholder="Email" required ng-model="$ctrl.auth.email" ng-disabled="$ctrl.progress" autocomplete="off">
+                                    <div ng-messages="auth.email.$error" ng-if="$ctrl.isHasError('email')" role="alert">
+                                        <div ng-message="required" class="form__message--error">Введите email</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('password') }">
+                                <label for="inputPassword" class="col-md-2 control-label">Пароль</label>
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" id="inputPassword" name="password" required placeholder="Password" ng-model="$ctrl.auth.password" ng-disabled="$ctrl.progress" autocomplete="off">
+                                    <div ng-messages="auth.password.$error" ng-if="$ctrl.isHasError('password')" role="alert">
+                                        <div ng-message="required" class="form__message--error">Введите пароль</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <button type="submit" class="btn btn-success" ng-disabled="auth.$invalid || $ctrl.progress">
+                                        <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.progress"></i> Войти
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
