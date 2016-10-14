@@ -15,7 +15,7 @@ npm install
 
 ## Usage
 
-### Run locally http://localhost:3000/dist
+### Run locally http://localhost:3000
 
 ```sh
 npm start
