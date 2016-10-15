@@ -8,13 +8,14 @@
                 <p>{{ $ctrl.object.description }}</p>
                 <p>
                     Труднодоступность: {{ $ctrl.object.inaccessibility }} {{ $ctrl.getInaccessibilityDimension() }}
-                    <span class="label label-warning" ng-if="$ctrl.object.visitors < 3">Не подтверждена</span>
+                    <span class="label label-warning" ng-if="$ctrl.object.visitors < 3">не подтверждено</span>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary">Учесть посещение</button>
+                <a ui-sref="object.check({ id: $ctrl.object.$id })" class="btn btn-primary">Учесть посещение</a>
+                <a ui-sref="object.edit({ id: $ctrl.object.$id })" class="btn btn-default">Редактировать</a>
             </div>
         </div>
     </div>

@@ -1,9 +1,10 @@
-export default class ObjectCardPageController {
-    constructor(ObjectService) {
+export default class ObjectCheckPageController {
+    constructor($state, ObjectService) {
         'ngInject';
 
+        this.$state = $state;
         this.ObjectService = ObjectService;
-
+        
         this._initObject();
     }
 
@@ -16,21 +17,16 @@ export default class ObjectCardPageController {
             });
     }
 
-    isRequire() {
-        return this.object.visitors < 3;
+    submit() {
+
     }
 
-    getInaccessibilityDimension() {
-        const { inaccessibility } = this.object;
-        let result;
-        if (inaccessibility === 1) {
-            result = 'балл';
-        } else if (inaccessibility < 5) {
-            result = 'балла';
-        } else {
-            result = 'баллов';
-        }
-        return result;
+    onClickCancelButton() {
+        this._gotoObjectCard();
+    }
+
+    _gotoObjectCard() {
+        this.$state.go('object.card', { id: this.id });
     }
 
     _startLoadProgress() {

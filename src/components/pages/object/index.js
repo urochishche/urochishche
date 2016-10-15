@@ -4,12 +4,14 @@ import uiRouter from 'angular-ui-router';
 import form from './form';
 import list from './list';
 import card from './card';
+import check from './check';
 
 export default angular.module('app.components.pages.object', [
         uiRouter,
         form.name,
         list.name,
-        card.name
+        card.name,
+        check.name
     ])
     .config(function($stateProvider) {
         'ngInject';
@@ -34,6 +36,24 @@ export default angular.module('app.components.pages.object', [
             .state('object.card', {
                 url: '/card/:id',
                 template: '<object-card-page id="$ctrl.id"></object-card-page>',
+                controller: idStateController,
+                controllerAs: '$ctrl'
+            })
+            .state('object.check', {
+                url: '/check/:id',
+                template: '<object-check-page id="$ctrl.id"></object-check-page>',
+                resolve: {
+                    authResolve
+                },
+                controller: idStateController,
+                controllerAs: '$ctrl'
+            })
+            .state('object.edit', {
+                url: '/edit/:id',
+                template: '<object-form-page id="$ctrl.id"></object-form-page>',
+                resolve: {
+                    authResolve
+                },
                 controller: idStateController,
                 controllerAs: '$ctrl'
             });

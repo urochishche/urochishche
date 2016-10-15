@@ -11,6 +11,12 @@ export default class ObjectFormPageController {
 
     _initObject() {
         if (this.id) {
+            this._startLoadProgress();
+            this.ObjectService.getObject(this.id)
+                .then(result => {
+                    this.object = result;
+                    this._stopLoadProgress();
+                });
         } else {
             this.object = {
                 inaccessibility: '5'
@@ -43,8 +49,8 @@ export default class ObjectFormPageController {
         };
 
         this._saveObject(data)
-            .then(() => {
-                this._gotoObjectCard();
+            .then(id => {
+                this._gotoObjectCard(id);
             })
             .catch(error => {
                 this._stopSaveProgress();
@@ -62,8 +68,20 @@ export default class ObjectFormPageController {
         return result;
     }
 
-    _gotoObjectCard() {
+    _gotoObjectCard(id) {
+        this.$state.go('object.card', { id });
+    }
+
+    _gotoObjectList() {
         this.$state.go('object.list');
+    }
+
+    onClickCancelButton() {
+        if (this.id) {
+            this._gotoObjectCard(this.id);
+        } else {
+            this._gotoObjectList();
+        }
     }
 
     _startLoadProgress() {

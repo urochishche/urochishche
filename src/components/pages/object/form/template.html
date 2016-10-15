@@ -1,5 +1,6 @@
-<div class="page page--objectForm" ng-hide="$ctrl.loadProgress">
-    <div class="container">
+<div class="page page--objectForm">
+    <progress-bar text="Загрузка события..." ng-if="$ctrl.loadProgress"></progress-bar>
+    <div class="container" ng-hide="$ctrl.loadProgress">
         <div class="row">
             <div class="col-md-12">
                 <div class="well well--form">
@@ -37,16 +38,7 @@
                                 <label for="inaccessibility" class="col-md-2 control-label">Оценка труднодоступности</label>
                                 <div class="col-md-4">
                                     <select class="form-control" name="inaccessibility" ng-model="$ctrl.object.inaccessibility" ng-disabled="$ctrl.disabledForm">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
+                                        <option value="{{ n }}" ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{ n }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -60,7 +52,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <button type="submit" class="btn btn-primary" ng-disabled="event.$invalid || $ctrl.disabledForm">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="object.$invalid || $ctrl.disabledForm">
                                         <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.saveProgress"></i> Сохранить
                                     </button>
                                     <button type="button" class="btn btn-danger" ng-if="$ctrl.id" ng-click="$ctrl.onClickRemoveButton()" ng-disabled="$ctrl.disabledForm">
@@ -76,4 +68,3 @@
         </div>
     </div>
 </div>
-<progress-bar text="Загрузка события..." ng-if="$ctrl.loadProgress"></progress-bar>

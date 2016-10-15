@@ -1,11 +1,20 @@
-<div class="page page--object">
-    <div class="container">
+<div class="page page--objectList">
+    <progress-bar text="Загрузка списка объектов ..." ng-if="$ctrl.loadProgress"></progress-bar>
+    <div class="container" ng-if="!$ctrl.loadProgress">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 Фильтр
             </div>
-            <div class="col-md-8">
-                Список объектов
+            <div class="col-md-10">
+                <div ng-repeat="item in $ctrl.list">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p><a ui-sref="object.card({ id: item.$id })">{{ item.name }}</a></p>
+                            <p>Посещений: <span class="badge">{{ item.visitors }}</span></p>
+                            <p>Труднодоступность: {{ item.inaccessibility }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

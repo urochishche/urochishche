@@ -4,23 +4,39 @@ export default class HomePageController {
 
         this.$state = $state;
 
-        $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDVljZQkk_QaNk8xonfYXJsThU0-z6q1X8";
-
         this.onClickMarker = (e, id) => {
             this._gotoObjectCard(id);
         };
 
-        NgMap.getMap()
-            .then((map) => {
-            });
+        Promise.all([
+            this._initMap(NgMap),
+            this._loadMarkers(ObjectService)
+        ])
+        .then(result => {
+            const map = result[0];
+            const markers = result[1];
 
-        this._loadMarkers(ObjectService);
+            const bounds = new google.maps.LatLngBounds();
+            markers.forEach(item => {
+                const latlng = new google.maps.LatLng(item.pos[0], item.pos[1]);
+                bounds.extend(latlng);
+            });
+            map.setCenter(bounds.getCenter());
+            map.fitBounds(bounds);
+        })
+    }
+
+    _initMap(NgMap) {
+        return NgMap.getMap()
+            .then((map) => {
+                return map;
+            });
     }
 
     _loadMarkers(ObjectService) {
-        ObjectService.getEnabledObject()
+        return ObjectService.getEnabledObject()
             .then(list => {
-                this.markers = list.map(item => {
+                return this.markers = list.map(item => {
                     const title = `${item.name} - ${item.inaccessibility}`;
                     return {
                         id: item.$id,
