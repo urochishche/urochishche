@@ -1,6 +1,6 @@
 <div class="page page--objectForm">
     <progress-bar text="Загрузка события..." ng-if="$ctrl.loadProgress"></progress-bar>
-    <div class="container" ng-hide="$ctrl.loadProgress">
+    <div class="container" >
         <div class="row">
             <div class="col-md-12">
                 <div class="well well--form">
@@ -9,7 +9,7 @@
                             <legend>{{ $ctrl.id ? 'Редактирование объекта' : 'Добавление нового объекта' }}</legend>
 
                             <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('name') }">
-                                <label for="name" class="col-md-2 control-label">Название</label>
+                                <label for="name" class="col-md-2 control-label">Название123</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" id="name" name="name" required ng-model="$ctrl.object.name" ng-disabled="$ctrl.disabledForm" autocomplete="off">
                                     <div ng-messages="object.name.$error" ng-if="$ctrl.isHasError('name')" role="alert">
@@ -18,6 +18,12 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="name" class="col-md-2 control-label">Map </label>
+                                <div class="col-md-8">
+                                    <ng-map id="newMap" class="map" default-style="false" ></ng-map>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="name" class="col-md-2 control-label">Координаты</label>
                                 <div class="col-md-4">
