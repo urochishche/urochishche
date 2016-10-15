@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
 export default class ObjectService {
-    constructor($q, $firebaseArray, $firebaseObject) {
+    constructor($q, $firebaseArray, $firebaseObject, AuthService) {
         'ngInject';
 
         this.database = firebase.database();
@@ -9,6 +9,7 @@ export default class ObjectService {
         this.$q = $q;
         this.$firebaseArray = $firebaseArray;
         this.$firebaseObject = $firebaseObject;
+        this.AuthService = AuthService;
     }
 
     _getObjectRef(key) {
@@ -17,10 +18,6 @@ export default class ObjectService {
 
     loadObjects() {
         const ref = this._getObjectRef();
-        return this._load(ref);
-    }
-
-    _load(ref) {
         const list = this.$firebaseArray(ref);
         return list.$loaded();
     }
@@ -57,10 +54,13 @@ export default class ObjectService {
 
     _add(ref, data) {
         const list = this.$firebaseArray(ref);
+        const { uid } = this.AuthService.getAuth();
         return list.$add({
                 ...data,
                 createTimestamp: Date.now(),
-                visitors: 1
+                verifed: false,
+                visitors: 1,
+                uid
             })
             .then(ref => {
                 return ref.key;
