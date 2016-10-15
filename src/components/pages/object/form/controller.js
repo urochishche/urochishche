@@ -84,6 +84,24 @@ export default class ObjectFormPageController {
         }
     }
 
+    onClickRemoveButton() {
+        if (this.id) {
+            this._removeObject(this.id);
+        }
+    }
+
+    _removeObject(id) {
+        this._startRemoveProgress();
+        this.ObjectService.removeObject(id)
+            .then(() => {
+                this._gotoObjectList();
+            })
+            .catch(error => {
+                this._stopRemoveProgress();
+                throw Error(error);
+            });
+    }
+
     _startLoadProgress() {
         this.loadProgress = true;
     }

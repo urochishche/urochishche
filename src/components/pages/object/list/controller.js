@@ -9,7 +9,6 @@ export default class ObjectListPageController {
         this._startLoadProgress();
         ObjectService.getEnabledObject()
             .then(result => {
-                console.log(result)
                 this.list = result;
                 this._stopLoadProgress();
             });
