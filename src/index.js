@@ -27,7 +27,7 @@ angular.module('app', [
             apiKey: "AIzaSyDVljZQkk_QaNk8xonfYXJsThU0-z6q1X8",
             authDomain: "urochishche-d0e5b.firebaseapp.com",
             databaseURL: "https://urochishche-d0e5b.firebaseio.com",
-            storageBucket: "",
+            storageBucket: "urochishche-d0e5b.appspot.com",
             messagingSenderId: "1030889086459"
         });
     })

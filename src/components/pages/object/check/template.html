@@ -9,9 +9,20 @@
                             <legend>Подтверждение посещения объекта</legend>
 
                             <div class="form-group">
-                                <label for="foto" class="col-md-2 control-label">Фотография</label>
+                                <label for="file" class="col-md-2 control-label">Фотография</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="name" name="name" required ng-model="$ctrl.foto" ng-disabled="$ctrl.disabledForm" autocomplete="off">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="file" readonly ng-value="$ctrl.file.name">
+                                        <span class="input-group-btn">
+                                            <upload-file-button upload-file="$ctrl.file"></upload-file-button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger" type="button" 
+                                                ng-click="$ctrl.removeFile()" ng-disabled="!$ctrl.file.name">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
