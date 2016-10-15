@@ -1,0 +1,22 @@
+<div class="page page--objectCard">
+    <div class="container" ng-if="!$ctrl.loadProgress">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1>{{ $ctrl.object.name }}</h1>
+                </div>
+                <p>{{ $ctrl.object.description }}</p>
+                <p>
+                    Труднодоступность: {{ $ctrl.object.inaccessibility }} {{ $ctrl.getInaccessibilityDimension() }}
+                    <span class="label label-warning" ng-if="$ctrl.object.visitors < 3">Не подтверждена</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary">Учесть посещение</button>
+            </div>
+        </div>
+    </div>
+    <progress-bar text="Загрузка объекта..." ng-if="$ctrl.loadProgress"></progress-bar>
+</div>

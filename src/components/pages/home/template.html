@@ -1,7 +1,10 @@
 <div class="page page--home">
 	<div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
 		<ng-map class="map" default-style="false" center="53.2009225,45.113284" zoom="11">
-			<marker position="53.2009225,45.113284" title="Hello World!"></marker>
+            <marker ng-repeat="marker in $ctrl.markers"
+                position="{{marker.pos}}"
+                title="{{marker.title}}"
+                on-click="$ctrl.onClickMarker(marker.id)"></marker>
 		</ng-map>
 	</div>
 </div>

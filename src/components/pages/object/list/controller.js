@@ -1,4 +1,4 @@
-export default class ObjectPageController {
+export default class ObjectListPageController {
     constructor($scope) {
         'ngInject';
     }
