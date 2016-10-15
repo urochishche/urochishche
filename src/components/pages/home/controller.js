@@ -34,7 +34,7 @@ export default class HomePageController {
     }
 
     _loadMarkers(ObjectService) {
-        return ObjectService.getEnabledObject()
+        return ObjectService.loadObjects()
             .then(list => {
                 return this.markers = list.map(item => {
                     const title = `${item.name} - ${item.inaccessibility}`;

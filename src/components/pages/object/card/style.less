@@ -1,3 +1,28 @@
 .page.page--objectCard {
     margin-top: 66px;
 }
+
+.object {
+    .object__description,
+    .object__description--empty,
+    .object__inaccessibility {
+        box-sizing: content-box;
+        border: 1px dashed #dedede;
+    }
+
+    .object__description,
+    .object__description--empty {
+        min-height: 80px;
+        margin-bottom: 8px;
+        padding: 8px;
+    }
+
+    .object__description--empty {
+        color: #aaaaaa;
+    }
+
+    .object__inaccessibility {
+        padding: 16px 8px;
+        margin-bottom: 20px;
+    }
+}

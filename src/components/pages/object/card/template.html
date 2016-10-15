@@ -5,17 +5,20 @@
                 <div class="page-header">
                     <h1>{{ $ctrl.object.name }}</h1>
                 </div>
-                <p>{{ $ctrl.object.description }}</p>
-                <p>
-                    Труднодоступность: {{ $ctrl.object.inaccessibility }} {{ $ctrl.getInaccessibilityDimension() }}
-                    <span class="label label-warning" ng-if="$ctrl.object.visitors < 3">не подтверждено</span>
-                </p>
+                <div class="object">
+                    <div class="object__description" ng-if="$ctrl.object.description">{{ $ctrl.object.description }}</div>
+                    <div class="object__description--empty" ng-if="!$ctrl.object.description">Описание не задано</div>
+                    <div class="object__inaccessibility">
+                        Труднодоступность: {{ $ctrl.object.inaccessibility }} {{ $ctrl.getInaccessibilityDimension() }}
+                        <span class="label label-warning" ng-if="$ctrl.object.visitors < 3">не подтверждено</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <a ui-sref="object.check({ id: $ctrl.object.$id })" class="btn btn-primary">Учесть посещение</a>
-                <a ui-sref="object.edit({ id: $ctrl.object.$id })" class="btn btn-default">Редактировать</a>
+                <a ui-sref="object.edit({ id: $ctrl.object.$id })" class="btn btn-default" ng-if="$ctrl.isEdit">Редактировать</a>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ export default class ObjectListPageController {
 
     _initObjectList(ObjectService) {
         this._startLoadProgress();
-        ObjectService.getEnabledObject()
+        ObjectService.getObject()
             .then(result => {
                 this.list = result;
                 this._stopLoadProgress();

@@ -2,14 +2,17 @@ export default class ObjectCardPageController {
     constructor(ObjectService) {
         'ngInject';
 
-        this.ObjectService = ObjectService;
-
-        this._initObject();
+        this._initObject(ObjectService);
+        this._initIsEdit();
     }
 
-    _initObject() {
+    _initIsEdit() {
+        this.isEdit = true;
+    }
+
+    _initObject(ObjectService) {
         this._startLoadProgress();
-        this.ObjectService.getObject(this.id)
+        ObjectService.getObject(this.id)
             .then(result => {
                 this.object = result;
                 this._stopLoadProgress();

@@ -1,34 +1,43 @@
 import firebase from 'firebase';
 
 export default class ObjectService {
-    constructor($firebaseArray, $firebaseObject) {
+    constructor($q, $firebaseArray, $firebaseObject) {
         'ngInject';
 
-        this.ref = firebase.database().ref('object').orderByChild('name');
+        this.database = firebase.database();
 
+        this.$q = $q;
         this.$firebaseArray = $firebaseArray;
         this.$firebaseObject = $firebaseObject;
     }
 
+    _getObjectRef(key) {
+        return key ? this.database.ref(`objects/${key}`) : this.database.ref('objects');
+    }
+
     loadObjects() {
-        const list = this.$firebaseArray(this.ref);
+        const ref = this._getObjectRef();
+        return this._load(ref);
+    }
+
+    _load(ref) {
+        const list = this.$firebaseArray(ref);
         return list.$loaded();
     }
 
-    getEnabledObject() {
-        return this.loadObjects()
-            .then(result => {
-                return result.filter(item => item.enabled);
-            });
+    getObject(key) {
+        const ref = this._getObjectRef(key);
+        return this._get(ref);
     }
 
-    getObject(key) {
-        const obj = this._getObj(key);
+    _get(ref) {
+        const obj = this.$firebaseObject(ref);
         return obj.$loaded();
     }
 
     saveObject(key, data) {
-        const obj = this._getObj(key);
+        const ref = this._getObjectRef(key);
+        const obj = this.$firebaseObject(ref);
         return obj.$loaded()
             .then(result => {
                 Object.assign(result, data, {
@@ -42,12 +51,15 @@ export default class ObjectService {
     }
 
     addObject(data) {
-        const list = this.$firebaseArray(this.ref);
+        const ref = this._getObjectRef();
+        return this._add(ref, data);
+    }
+
+    _add(ref, data) {
+        const list = this.$firebaseArray(ref);
         return list.$add({
                 ...data,
                 createTimestamp: Date.now(),
-                enabled: false,
-                validated: false,
                 visitors: 1
             })
             .then(ref => {
@@ -56,12 +68,12 @@ export default class ObjectService {
     }
 
     removeObject(key) {
-        const obj = this._getObj(key);
-        return obj.$remove();
+        const ref = this._getObjectRef(key); 
+        return this._remove(ref);
     }
 
-    _getObj(key) {
-        const ref = firebase.database().ref(`object/${key}`);
-        return this.$firebaseObject(ref);
+    _remove(ref) {
+        const obj = this.$firebaseObject(ref);
+        return obj.$remove();
     }
 };

@@ -1,10 +1,11 @@
 import firebase from 'firebase';
 
 export default class AuthServiceController {
-    constructor($firebaseAuth) {
+    constructor($firebaseAuth, $firebaseObject) {
         'ngInject';
 
         this.auth = $firebaseAuth(firebase.auth());
+        this.$firebaseObject = $firebaseObject;
     }
 
     waitForSignIn() {
@@ -26,6 +27,7 @@ export default class AuthServiceController {
     signInWithEmailAndPassword(email, password) {
         return this.auth.$signInWithEmailAndPassword(email, password)
             .then(firebaseUser => {
+                return firebaseUser.uid;
             });
     }
 
