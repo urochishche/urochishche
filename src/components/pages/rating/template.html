@@ -1,2 +1,29 @@
 <div class="page page--rating">
+    <progress-bar text="Загрузка списка пользователей ..." ng-if="$ctrl.loadProgress"></progress-bar>
+    <div class="container" ng-if="!$ctrl.loadProgress">
+        <div ng-repeat="item in $ctrl.list">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="user">
+                        <div class="user__rating">
+                            <span class="label label-primary">{{ item.rating }} баллов</span>
+                        </div>
+                        <div class="user__image">
+                            <i class="fa fa-user fa-4x" aria-hidden="true"></i>
+                        </div>
+                        <div class="user__name">
+                            {{ item.user.name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <ul>
+                        <li ng-repeat="object in item.objects | orderBy: 'inaccessibility'">
+                            {{ object.name }} <span class="badge">{{ object.inaccessibility }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,10 +1,10 @@
 export default class ObjectCheckPageController {
-    constructor($state, ObjectService, FileStorageService, VerifyRequestService) {
+    constructor($state, ObjectService, RatingService, AuthService) {
         'ngInject';
 
         this.$state = $state;
-        this.FileStorageService = FileStorageService;
-        this.VerifyRequestService = VerifyRequestService;
+        this.RatingService = RatingService;
+        this.AuthService = AuthService;
         
         this._initObject(ObjectService);
     }
@@ -14,19 +14,22 @@ export default class ObjectCheckPageController {
         ObjectService.getObject(this.id)
             .then(result => {
                 this.object = result;
+                this.points = result.inaccessibility;
                 this._stopLoadProgress();
             });
     }
 
     submit() {
-        this.FileStorageService.uploadFile(this.file)
-            .then(key => {
-                return this.VerifyRequestService.addRequest({
-                    uid: this.object.uid,
-                    objectId: this.object.$id,
-                    fileId: key
-                });
-            })
+        this._incVisit();
+    }
+
+    _incVisit() {
+        const { uid } = this.AuthService.getAuth();
+        const data = {
+            uid,
+            objectId: this.id
+        };
+        this.RatingService.incVisit(data)
             .then(() => {
                 this._gotoObjectCard();
             });
