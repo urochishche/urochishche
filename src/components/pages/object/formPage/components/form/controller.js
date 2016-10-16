@@ -37,7 +37,8 @@ export default class ObjectFormController {
              position: latLng, 
              map: map,
              draggable: true,
-             animation: google.maps.Animation.DROP
+             animation: google.maps.Animation.DROP,
+             icon: 'src/content/img/icon2.png'
         });
         map.panTo(latLng);
          
