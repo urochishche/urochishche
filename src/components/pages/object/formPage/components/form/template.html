@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well--form">
+                <form name="object" class="form-horizontal" ng-submit="$ctrl.onSubmit()">
+                    <fieldset>
+                        <legend>{{ $ctrl.id ? 'Редактирование объекта' : 'Добавление нового объекта' }}</legend>
+
+                        <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('name') }">
+                            <label for="name" class="col-md-2 control-label">Название</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="name" name="name" required ng-model="$ctrl.object.name" ng-disabled="$ctrl.disabledForm" autocomplete="off">
+                                <div ng-messages="object.name.$error" ng-if="$ctrl.isHasError('name')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите название объекта</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-md-2 control-label">Координаты</label>
+                            <div class="col-md-8">
+                                <ng-map id="newMap" class="map" default-style="false" ></ng-map>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">
+                                <input type="text" class="form-control" id="latitude" name="latitude" required ng-model="$ctrl.object.latitude" ng-disabled="$ctrl.disabledForm" autocomplete="off" placeholder="Широта">
+                                <div ng-messages="object.latitude.$error" ng-if="$ctrl.isHasError('latitude')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите широту</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="longitude" name="longitude" required ng-model="$ctrl.object.longitude" ng-disabled="$ctrl.disabledForm" autocomplete="off" placeholder="Долгота">
+                                <div ng-messages="object.longitude.$error" ng-if="$ctrl.isHasError('longitude')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите долготу</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inaccessibility" class="col-md-2 control-label">Оценка труднодоступности</label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="inaccessibility" ng-model="$ctrl.object.inaccessibility" ng-disabled="$ctrl.disabledForm">
+                                    <option value="{{ n }}" ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{ n }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="col-md-2 control-label">Краткое описание</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" id="description" name="description" rows="4" ng-model="$ctrl.object.description" ng-disabled="$ctrl.disabledForm" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-2">
+                                <button type="submit" class="btn btn-primary" ng-disabled="object.$invalid || $ctrl.disabledForm">
+                                    <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.saveProgress"></i> Сохранить
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-if="$ctrl.id" ng-click="$ctrl.onRemove()" ng-disabled="$ctrl.disabledForm">
+                                    <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.removeProgress"></i> Удалить
+                                </button>
+                                <button type="button" class="btn btn-default" ng-click="$ctrl.onCancel()" ng-disabled="$ctrl.disabledForm">Отмена</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,14 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-import form from './form';
+import formPage from './formPage';
 import list from './list';
 import card from './card';
 import check from './check';
 
 export default angular.module('app.components.pages.object', [
         uiRouter,
-        form.name,
+        formPage.name,
         list.name,
         card.name,
         check.name

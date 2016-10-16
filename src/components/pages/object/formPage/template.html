@@ -1,0 +1,12 @@
+<div class="page page--objectForm">
+    <progress-bar text="Загрузка события..." ng-if="$ctrl.loadProgress"></progress-bar>
+    <object-form class="container" 
+        id="$ctrl.id"
+        object="$ctrl.object"
+        save-progress="$ctrl.saveProgress"
+        remove-progress="$ctrl.removeProgress"
+        on-submit="$ctrl.submit()"
+        on-cancel="$ctrl.cancel()",
+        on-remove="$ctrl.remove()"
+        ng-if="!$ctrl.loadProgress"></object-form>
+</div>

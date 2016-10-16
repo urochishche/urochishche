@@ -6,64 +6,11 @@ export default class ObjectFormPageController {
         this.$scope = $scope;
         this.$state = $state;
         this.ObjectService = ObjectService;
-        
-        this.object = {
-            inaccessibility: '5',
-            latitude: null,
-            longitude: null
-        };
 
-         this._initObject().then( res => {
-             this._initMap(NgMap);
-         });
-    }
-   
-      _initMap(NgMap) {
-        return NgMap.getMap({id:'newMap'})
-            .then((map) => {
-                // settings map
-                map.setZoom(10);
-                var latlng = new google.maps.LatLng(53.1948244, 44.7504436);
-                map.setCenter(latlng);
-                 
-                // create new marker
-                if (window.marker == undefined || window.marker == null) {
-                    window.marker = this._createMarker(latlng, map);
-                }
-                
-                if(this.object.latitude !== null && this.object.longitude !== null) {
-                    var latLng = new google.maps.LatLng(this.object.latitude, this.object.longitude);
-                    window.marker.setPosition(latLng);
-                }
-               
-               google.maps.event.addListener(map, 'click', function(evt) {
-                    var latitude = evt.latLng.lat().toPrecision(8);
-                    var longitude = evt.latLng.lng().toPrecision(8);
-               
-                    window.marker.setPosition(evt.latLng);
-               });
-               return map;
+        this._initObject()
+            .then(result => {
+                this.object = result;
             });
-      }
-    
-    _createMarker(latLng, map) {
-        var marker = new google.maps.Marker({
-             position: latLng, 
-             map: map,
-             draggable: true,
-             animation: google.maps.Animation.DROP});
-         map.panTo(latLng);
-         
-        google.maps.event.addListener(marker, 'dragend', (evt) => {
-                var latitude = evt.latLng.lat().toPrecision(8);
-                var longitude = evt.latLng.lng().toPrecision(8);
-
-                this.object.latitude = latitude;
-                this.object.longitude = longitude;               
-
-                this.$scope.$apply();
-        });
-        return marker;
     }
 
     _initObject() {
@@ -72,18 +19,17 @@ export default class ObjectFormPageController {
             this._startLoadProgress();
             result = this.ObjectService.getObject(this.id)
                 .then(result => {
-                   this.object = result;
                    this._stopLoadProgress();
+                   return result;
                 });
         } else {
-            result = this.$q.resolve();
+            result = this.$q.resolve({
+                inaccessibility: '5',
+                latitude: null,
+                longitude: null
+            });
         }
         return result;
-    }
-    
-    isHasError(attrName) {
-        const item = this.$scope.object[attrName];
-        return item.$invalid && item.$dirty && item.$touched;
     }
 
     submit() {
@@ -133,7 +79,7 @@ export default class ObjectFormPageController {
         this.$state.go('object.list');
     }
 
-    onClickCancelButton() {
+    cancel() {
         if (this.id) {
             this._gotoObjectCard(this.id);
         } else {
@@ -141,7 +87,7 @@ export default class ObjectFormPageController {
         }
     }
 
-    onClickRemoveButton() {
+    remove() {
         if (this.id) {
             this._removeObject(this.id);
         }
