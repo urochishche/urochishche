@@ -42,7 +42,7 @@ export default class ObjectFormController {
              map: map,
              draggable: true,
              animation: google.maps.Animation.DROP,
-             icon: 'src/content/img/icon2.png'
+             icon: 'http://www.cstopz.com/imagehost/di/OE1Z/icon2.png'
         });
          
         google.maps.event.addListener(marker, 'dragend', (evt) => {

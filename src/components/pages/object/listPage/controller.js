@@ -14,7 +14,7 @@ export default class ObjectListPageController {
     onApplyFilter() {
         this.list = this.listAll.slice(0);
         
-        if(this.filter.inaccessibility != null) {
+        if(this.filter.inaccessibility != null && this.filter.inaccessibility != -1) {
              this.list = this.list.filter(item => {
                  return (item.inaccessibility == this.filter.inaccessibility );
             })  
@@ -35,7 +35,6 @@ export default class ObjectListPageController {
                  return ( min <= item.visitors && item.visitors <= max );
             })             
         }
-        
     }
 
     _initObjectList(ObjectService) {
