@@ -25,6 +25,7 @@ module.exports = {
         }),
         new ExtractTextPlugin('urochishche.css'),
         new HtmlWebPackPlugin({
+            favicon: './src/content/ico/favicon.ico',
             template: './src/index.html'
         })
     ],
