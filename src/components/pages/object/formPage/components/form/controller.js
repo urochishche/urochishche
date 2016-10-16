@@ -11,18 +11,23 @@ export default class ObjectFormController {
         NgMap.getMap({ id:'newMap' })
             .then((map) => {
                 map.setZoom(10);
-                const latlng = new google.maps.LatLng(53.1948244, 44.7504436);
-                map.setCenter(latlng);
-
+               
+                let latlng;
+                
                 if (!window.marker) {
-                    window.marker = this._createMarker(latlng, map);
+                    window.marker = this._createMarker(map);
                 }
-
+                
                 if (latitude && longitude) {
-                    const latLng = new google.maps.LatLng(latitude, longitude);
-                    window.marker.setPosition(latLng);
+                    latlng = new google.maps.LatLng(latitude, longitude);
+                } else {
+                    latlng = new google.maps.LatLng(53.1948244, 44.7504436);
                 }
-
+                
+                window.marker.setPosition(latlng);
+                map.setCenter(latlng);
+                map.panTo(latlng);
+                
                 google.maps.event.addListener(map, 'click', (evt) => {
                     const latitude = evt.latLng.lat().toPrecision(8);
                     const longitude = evt.latLng.lng().toPrecision(8);
@@ -32,15 +37,13 @@ export default class ObjectFormController {
             });
     }
     
-    _createMarker(latLng, map) {
+    _createMarker(map) {
         const marker = new google.maps.Marker({
-             position: latLng, 
              map: map,
              draggable: true,
              animation: google.maps.Animation.DROP,
              icon: 'src/content/img/icon2.png'
         });
-        map.panTo(latLng);
          
         google.maps.event.addListener(marker, 'dragend', (evt) => {
             const lat = evt.latLng.lat();
