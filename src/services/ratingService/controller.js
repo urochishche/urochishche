@@ -38,6 +38,7 @@ export default class RatingService {
             .then(users => {
                 return ratingList.map(item => {
                     let visits = 0;
+
                     const rating = Object.keys(item.objects).reduce((sum, key) => {
                         const count = item.objects[key];
                         const object = this._findObjectByKey(objectList, key);
@@ -46,7 +47,9 @@ export default class RatingService {
                     }, 0);
 
                     const objects = Object.keys(item.objects).map(key => {
-                        return this._findObjectByKey(objectList, key);
+                        const object = this._findObjectByKey(objectList, key);
+                        const count = item.objects[key];
+                        return Object.assign({}, object, { count });
                     });
 
                     const user = this._findUserById(users, item.$id);
@@ -84,7 +87,8 @@ export default class RatingService {
 
         return obj.$loaded()
             .then(result => {
-                result.objects[objectId]++;
+                const value = result.objects[objectId];
+                result.objects[objectId] = value ? value + 1 : 1;
                 Object.assign(result, {
                     editTimestamp: Date.now()
                 });
