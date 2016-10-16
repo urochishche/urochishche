@@ -2,16 +2,16 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
 import formPage from './formPage';
-import list from './list';
-import card from './card';
-import check from './check';
+import lisPage from './listPage';
+import cardPage from './cardPage';
+import checkPage from './checkPage';
 
 export default angular.module('app.components.pages.object', [
         uiRouter,
         formPage.name,
-        list.name,
-        card.name,
-        check.name
+        lisPage.name,
+        cardPage.name,
+        checkPage.name
     ])
     .config(function($stateProvider) {
         'ngInject';

@@ -58,7 +58,7 @@ export default class ObjectService {
         return list.$add({
                 ...data,
                 createTimestamp: Date.now(),
-                verifed: false,
+                verifed: true,
                 visitors: 1,
                 uid
             })

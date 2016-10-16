@@ -7,7 +7,7 @@ export default class LoginController {
         this.AuthService = AuthService;
 
         this.auth = {
-            email: 'urochishche@gmail.com',
+            email: 'admin@urochishche.ru',
             password: '123456'
         };
     }
