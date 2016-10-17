@@ -5,6 +5,9 @@ import firebase from 'firebase';
 import angularfire from 'angularfire';
 import ngMap from 'ngmap'; 
 
+import 'bootstrap/js/collapse';
+import 'bootstrap/js/transition';
+
 import components from './components';
 import services from './services';
 
