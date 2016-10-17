@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-10">
                     <ul class="objects__list">
-                        <li class="list__item" ng-repeat="object in item.objects | orderBy: 'inaccessibility'">
+                        <li class="list__item" ng-repeat="object in item.objects | orderBy: 'count'">
                             <a ui-sref="object.card({ id: object.$id })">{{ object.name }}</a>
                             <span class="label label-default">{{ object.count }} {{ $ctrl._getValueText(object.count) }}</span>
                             <i class="fa fa-times" aria-hidden="true"></i>

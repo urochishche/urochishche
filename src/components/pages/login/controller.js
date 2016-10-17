@@ -5,11 +5,6 @@ export default class LoginController {
         this.$scope = $scope;
         this.$state = $state;
         this.AuthService = AuthService;
-
-        this.auth = {
-            email: 'admin@urochishche.ru',
-            password: '123456'
-        };
     }
 
     submit() {
