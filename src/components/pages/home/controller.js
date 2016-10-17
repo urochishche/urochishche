@@ -1,5 +1,5 @@
 export default class HomePageController {
-    constructor($scope, $state, NgMap, ObjectService) {
+    constructor($q, $scope, $state, NgMap, ObjectService) {
         'ngInject';
 
         this.$state = $state;
@@ -8,7 +8,7 @@ export default class HomePageController {
             this._gotoObjectCard(id);
         };
 
-        Promise.all([
+        $q.all([
             this._initMap(NgMap),
             this._loadMarkers(ObjectService)
         ])

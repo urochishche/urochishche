@@ -1,8 +1,18 @@
 export default class ObjectCardPageController {
-    constructor(ObjectService) {
+    constructor($q, ObjectService, NgMap) {
         'ngInject';
 
-        this._initObject(ObjectService);
+        $q.all([
+            this._initMap(NgMap),
+            this._initObject(ObjectService)
+        ])
+        .then(result => {
+            const map = result[0];
+            const { latitude, longitude } = result[1];
+            const latlng = new google.maps.LatLng(latitude, longitude);
+            map.setCenter(latlng);
+        });
+
         this._initIsEdit();
     }
 
@@ -10,12 +20,21 @@ export default class ObjectCardPageController {
         this.isEdit = true;
     }
 
+    _initMap(NgMap) {
+        return NgMap.getMap();
+    }
+
     _initObject(ObjectService) {
         this._startLoadProgress();
-        ObjectService.getObject(this.id)
+        return ObjectService.getObject(this.id)
             .then(result => {
                 this.object = result;
+                this.objectPosition = [
+                    result.latitude,
+                    result.longitude
+                ];
                 this._stopLoadProgress();
+                return result;
             });
     }
 

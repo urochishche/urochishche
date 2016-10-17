@@ -14,7 +14,7 @@ export default class FileStorageServiceController {
 
     uploadFile(file) {
         const fileKey = this._getRandomValue();
-        return new Promise((resolve, reject) => {
+        return new $q((resolve, reject) => {
             const uploadTask = this.storageRef.child(fileKey.toString()).put(file);
             uploadTask.on('state_changed', snapshot => {
                 }, error => {

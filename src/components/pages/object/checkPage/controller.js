@@ -29,9 +29,14 @@ export default class ObjectCheckPageController {
             uid,
             objectId: this.id
         };
+        this._startSaveProgress();
         this.RatingService.incVisit(data)
             .then(() => {
+                this._stopSaveProgress();
                 this._gotoObjectCard();
+            })
+            .catch(() => {
+                this._stopSaveProgress();
             });
     }
 
@@ -53,5 +58,13 @@ export default class ObjectCheckPageController {
 
     _stopLoadProgress() {
         this.loadProgress = false;
+    }
+
+    _startSaveProgress() {
+        this.disabledForm = this.saveProgress = true;
+    }
+
+    _stopSaveProgress() {
+        this.disabledForm = this.saveProgress = false;
     }
 };

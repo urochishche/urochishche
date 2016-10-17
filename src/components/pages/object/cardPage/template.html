@@ -7,6 +7,11 @@
                     <h1>{{ $ctrl.object.name }} <span class="label label-default" ng-if="!$ctrl.object.verifed">New</span></h1>
                 </div>
                 <div class="object">
+                    <div class="object__map">
+                        <ng-map class="map" default-style="false">
+                            <marker position="{{ $ctrl.objectPosition }}"></marker>
+                        </ng-map>
+                    </div>
                     <div class="object__description" ng-if="$ctrl.object.description">{{ $ctrl.object.description }}</div>
                     <div class="object__description--empty" ng-if="!$ctrl.object.description">Описание не задано</div>
                     <div class="object__inaccessibility">

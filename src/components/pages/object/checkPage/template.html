@@ -29,7 +29,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <button type="submit" class="btn btn-primary" ng-disabled="object.$invalid || $ctrl.disabledForm">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="$ctrl.disabledForm">
                                         <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.saveProgress"></i> Продолжить
                                     </button>
                                     <button type="button" class="btn btn-default" ng-click="$ctrl.onClickCancelButton()" ng-disabled="$ctrl.disabledForm">Отмена</button>
