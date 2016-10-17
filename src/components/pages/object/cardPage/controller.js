@@ -12,6 +12,8 @@ export default class ObjectCardPageController {
             const map = result[0];
             const { latitude, longitude } = result[1];
             const latlng = new google.maps.LatLng(latitude, longitude);
+
+            map.setZoom(10);
             map.setCenter(latlng);
         });
 

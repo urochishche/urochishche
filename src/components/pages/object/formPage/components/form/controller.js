@@ -1,3 +1,5 @@
+const precision = 8;
+
 export default class ObjectFormController {
     constructor($scope, NgMap) {
         'ngInject';
@@ -7,55 +9,64 @@ export default class ObjectFormController {
     }
    
     _initMap(NgMap) {
-        const { latitude, longitude } = this.object;
-        NgMap.getMap({ id:'newMap' })
+        let { latitude, longitude } = this.object;
+        const options = {
+            id:'newMap'
+        };
+        const maps = this._getGoogleMaps();
+
+        NgMap.getMap(options)
             .then((map) => {
                 map.setZoom(10);
-               
-                let latlng;
-                
-                if (!window.marker) {
-                    window.marker = this._createMarker(map);
+
+                if (!latitude || !longitude) {
+                    latitude = 53.1948244;
+                    longitude = 44.7504436;
                 }
+
+                const marker = this._createMarker(map);
+                const latlng = new maps.LatLng(latitude, longitude);
                 
-                if (latitude && longitude) {
-                    latlng = new google.maps.LatLng(latitude, longitude);
-                } else {
-                    latlng = new google.maps.LatLng(53.1948244, 44.7504436);
-                }
-                
-                window.marker.setPosition(latlng);
+                marker.setPosition(latlng);
                 map.setCenter(latlng);
                 map.panTo(latlng);
+
+                const dragendListener = maps.event.addListener(marker, 'dragend', (evt) => {
+                    const lat = evt.latLng.lat();
+                    this.object.latitude = evt.latLng.lat().toPrecision(precision);
+                    this.object.longitude = evt.latLng.lng().toPrecision(precision);
+                    this.$scope.$apply();
+                });
                 
-                google.maps.event.addListener(map, 'click', (evt) => {
-                    const latitude = evt.latLng.lat().toPrecision(8);
-                    const longitude = evt.latLng.lng().toPrecision(8);
-                    window.marker.setPosition(evt.latLng);
+                const clickListener = maps.event.addListener(map, 'click', (evt) => {
+                    const latitude = evt.latLng.lat().toPrecision(precision);
+                    const longitude = evt.latLng.lng().toPrecision(precision);
+                    marker.setPosition(evt.latLng);
+                });
+
+                this.$scope.$on('$destroy', () => {
+                    marker.setMap(null);
+                    maps.event.removeListener(dragendListener);
+                    maps.event.removeListener(clickListener);
                 });
                 return map; 
             });
     }
     
     _createMarker(map) {
-        const marker = new google.maps.Marker({
+        const maps = this._getGoogleMaps();
+        return new maps.Marker({
              map: map,
-             draggable: true,
-             animation: google.maps.Animation.DROP,
-             icon: 'http://www.cstopz.com/imagehost/di/OE1Z/icon2.png'
+             draggable: true
         });
-         
-        google.maps.event.addListener(marker, 'dragend', (evt) => {
-            const lat = evt.latLng.lat();
-            this.object.latitude = evt.latLng.lat().toPrecision(8);
-            this.object.longitude = evt.latLng.lng().toPrecision(8);
-            this.$scope.$apply();
-        });
-        return marker;
     }
     
     isHasError(attrName) {
         const item = this.$scope.object[attrName];
         return item.$invalid && item.$dirty && item.$touched;
+    }
+
+    _getGoogleMaps() {
+        return window.google.maps;
     }
 };
