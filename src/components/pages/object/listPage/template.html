@@ -3,43 +3,34 @@
     <div class="container" ng-if="!$ctrl.loadProgress">
         <div class="row">
             <div class="col-md-2">
-                <div>
-                    Сложность 
-                </div>
-                <div>
-                    <select class="form-control" 
-                            ng-model="$ctrl.filter.inaccessibility" >
-                        <option value="-1" >-все-</option>
-                        <option value="{{ n }}" 
-                                ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{ n}}</option>
-                    </select>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    Посещений 
-                </div>
-                <div>
-                    <select class="form-control" 
-                            ng-model="$ctrl.filter.visitors" >
-                        <option value="null" >-все-</option>
-                        <option value="1"> меньше 5</option>
-                        <option value="2">  5 - 10 </option>
-                        <option value="3">  больше 10  </option>
-                    </select>
-                </div>
-                
-                <div ng-click="$ctrl.onApplyFilter()" class="btn btn-primary"  
-                     style="margin-top: 20px;" >
-                    <!--<i class="fa fa-lg fa-spinner fa-spin" ></i>--> 
-                    Применить
-                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="inaccessibility">Сложность</label>
+                        <select class="form-control" id="inaccessibility" ng-model="$ctrl.filter.inaccessibility">
+                            <option value="{{n}}" ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitors">Посещения</label>
+                        <select class="form-control" id="visitors" ng-model="$ctrl.filter.visitors">
+                            <option value="1">меньше 5</option>
+                            <option value="2">от 5 до 10</option>
+                            <option value="3">больше 10</option>
+                        </select>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.applyFilter()">Применить</button>
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.clearFilter()" ng-if="$ctrl.filter.active">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="col-md-10">
                 <div ng-repeat="item in $ctrl.list">
                     <div class="panel panel-default panel--card">
                         <div class="panel-heading">
                             <a ui-sref="object.card({ id: item.$id })">{{ item.name }}</a>
-                            <!--<div class="trek-img"></div>-->
                         </div>
                         <div class="panel-body">
                             {{ item.description }}
@@ -55,6 +46,11 @@
                                 труднодоступность <span class="badge">{{ item.inaccessibility }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div ng-if="!$ctrl.list.length">
+                    <div class="alert alert-info">
+                        <strong>Нет данных</strong>
                     </div>
                 </div>
             </div>

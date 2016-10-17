@@ -2,47 +2,65 @@ export default class ObjectListPageController {
     constructor(ObjectService) {
         'ngInject';
 
-        this.filter = { 
-            inaccessibility: null,
-            visitors: null
-        };
-
+        this._initFilter();
         this._initObjectList(ObjectService);
     }
-    
-    // 
-    onApplyFilter() {
-        this.list = this.listAll.slice(0);
-        
-        if(this.filter.inaccessibility != null && this.filter.inaccessibility != -1) {
-             this.list = this.list.filter(item => {
-                 return (item.inaccessibility == this.filter.inaccessibility );
-            })  
+
+    _initFilter() {
+        this.filter = { 
+            inaccessibility: null,
+            visitors: null,
+            active: false
+        };
+    }
+
+    applyFilter() {
+        const { inaccessibility, visitors } = this.filter;
+        let result = this.objects.slice();
+
+        if (inaccessibility) {
+            result = result.filter(item => {
+                 return item.inaccessibility === inaccessibility;
+            });
         }
 
-        if(this.filter.visitors != null) {
-            var min = 0;
-            var max = 10000;
-            if(this.filter.visitors == 1) {
+        if (visitors) {
+            const value = parseInt(visitors, 10);
+            let min = 0;
+            let max;
+
+            if (value === 1) {
                 max = 5;
-            } else if (this.filter.visitors == 2) {
-                min = 5; max = 10;
-            } else if (this.filter.visitors == 3) {
+            } else if (value === 2) {
+                min = 5; 
+                max = 10;
+            } else if (value === 3) {
                 min = 10; 
             }
             
-            this.list = this.list.filter(item => {
-                 return ( min <= item.visitors && item.visitors <= max );
-            })             
+            result = result.filter(item => {
+                const { visitors } = item;
+                return (min <= visitors) && (visitors < max);
+            });
         }
+
+        if (inaccessibility || visitors) {
+            this.filter.active = true;
+        }
+
+        this.list = result;
+    }
+
+    clearFilter() {
+        this._initFilter();
+        this.list = this.objects;
     }
 
     _initObjectList(ObjectService) {
         this._startLoadProgress();
         ObjectService.loadObjects()
             .then(result => {
-                this.list = result;
-                this.listAll = result;
+                this.objects = this.list = result;
                 this._stopLoadProgress();
             });
     }
