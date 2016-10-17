@@ -1,6 +1,8 @@
 export default class ObjectCardPageController {
-    constructor($q, ObjectService, NgMap) {
+    constructor($q, ObjectService, NgMap, AuthService) {
         'ngInject';
+
+        this.AuthService = AuthService;
 
         $q.all([
             this._initMap(NgMap),
@@ -61,5 +63,9 @@ export default class ObjectCardPageController {
 
     _stopLoadProgress() {
         this.loadProgress = false;
+    }
+
+    _isAuth() {
+        return this.AuthService.getAuth();
     }
 };

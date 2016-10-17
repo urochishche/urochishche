@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-if="$ctrl.object.verifed">
+        <div class="row" ng-if="$ctrl._isAuth()">
             <div class="col-md-12">
                 <a ui-sref="object.check({ id: $ctrl.object.$id })" class="btn btn-primary">Учесть посещение</a>
                 <a ui-sref="object.edit({ id: $ctrl.object.$id })" class="btn btn-default" ng-if="$ctrl.isEdit">Редактировать</a>
