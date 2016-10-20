@@ -1,14 +1,35 @@
 const precision = 8;
 
 export default class ObjectFormController {
-    constructor($scope, NgMap) {
+    constructor($scope, NgMap, GeolocationService) {
         'ngInject';
 
         this.$scope = $scope;
-        this._initMap(NgMap);
+
+        this._getPosition(GeolocationService)
+            .then((pos) => {
+                this._initMap(NgMap, pos);
+            });        
+    }
+
+    _getPosition(GeolocationService) {
+        return GeolocationService.getPosition()
+            .then((pos) => {
+                const { latitude, longitude } = pos.coords;
+                return {
+                    latitude,
+                    longitude
+                };
+            })
+            .catch(() => {
+                return {
+                    latitude: 53.1948244,
+                    longitude: 44.7504436
+                };
+            });
     }
    
-    _initMap(NgMap) {
+    _initMap(NgMap, defaultPos) {
         let { latitude, longitude } = this.object;
         const options = {
             id:'newMap'
@@ -20,8 +41,8 @@ export default class ObjectFormController {
                 map.setZoom(10);
 
                 if (!latitude || !longitude) {
-                    latitude = 53.1948244;
-                    longitude = 44.7504436;
+                    latitude = defaultPos.latitude;
+                    longitude = defaultPos.longitude;
                 }
 
                 const marker = this._createMarker(map);
