@@ -1,0 +1,1 @@
+cmd /K npm run static:build

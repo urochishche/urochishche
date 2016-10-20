@@ -1,17 +1,21 @@
-export default class LoginController {
-    constructor($scope, $state, $timeout, AuthService) {
+export default class RegisterController {
+    constructor($scope, $state, AuthService) {
         'ngInject';
 
         this.$scope = $scope;
         this.$state = $state;
-        this.$timeout = $timeout;
         this.AuthService = AuthService;
     }
 
     submit() {
-        const { email, password } = this.auth;
+        const { email, password, name, photoURL } = this.auth;
         this._startProgress();
-        this.AuthService.signInWithEmailAndPassword(email, password)
+        this.AuthService.createUser({
+                email,
+                password,
+                name,
+                photoURL
+            })
             .then(() => {
                 this._gotoUserState();
             })
@@ -24,20 +28,20 @@ export default class LoginController {
     _onError(error) {
         let result;
         switch (error.code) {
-            case 'auth/user-disabled': {
-                result = 'Пользователь заблокирован';
+            case 'auth/email-already-in-use': {
+                result = 'Пользователь с таким адресом электронной почты уже существует';
                 break;
             }
             case 'auth/invalid-email': {
                 result = 'Неправильный формат адреса электронной почты';
                 break;
             }
-            case 'auth/user-not-found': {
-                result = 'Пользователь не найден';
+            case 'auth/operation-not-allowed': {
+                result = 'Регистрация заблокирована';
                 break;
             }
-            case 'auth/wrong-password': {
-                result = 'Неверный пароль';
+            case 'auth/weak-password': {
+                result = 'Слишком простой пароль';
                 break;
             }
             case 'auth/too-many-requests': {
@@ -63,6 +67,10 @@ export default class LoginController {
     isHasError(attrName) {
         const item = this.$scope.auth[attrName];
         return item.$invalid && item.$dirty && item.$touched;
+    }
+
+    comparePassword() {
+        debugger;
     }
 
     _startProgress() {

@@ -1,0 +1,72 @@
+<div class="page page--register">
+    <div class="container">
+        <div class="container__message">
+            <div class="alert alert-warning alert-dismissible" role="alert" ng-if="$ctrl.errorMessage">
+                <button type="button" class="close" ng-click="$ctrl.hideErrorMessage()" ng-disabled="$ctrl.blocked" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Ошибка!</strong> {{ $ctrl.errorMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container__form">
+            <div class="well">
+                <form name="auth" class="form-horizontal from--auth" ng-submit="$ctrl.submit()">
+                    <fieldset>
+                        <legend>Регистрация</legend>
+
+                        <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('name') }">
+                            <label for="inputName" class="col-md-2 control-label">Имя</label>
+                            <div class="col-xs-12 col-sm-12 col-md-10">
+                                <input type="text" class="form-control" id="inputName" name="name" placeholder="Ваше имя или псевдоним" 
+                                    required ng-model="$ctrl.auth.name" ng-disabled="$ctrl.progress || $ctrl.blocked" autocomplete="off">
+                                <div ng-messages="auth.name.$error" ng-if="$ctrl.isHasError('name')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите имя</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPhoto" class="col-md-2 control-label">Фото</label>
+                            <div class="col-xs-12 col-sm-12 col-md-10">
+                                <input type="text" class="form-control" id="inputPhoto" name="photoURL" placeholder="Ссылка на Вашу фотографию" 
+                                    ng-model="$ctrl.auth.photoURL" ng-disabled="$ctrl.progress || $ctrl.blocked" autocomplete="off">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('email') }">
+                            <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                            <div class="col-xs-12 col-sm-12 col-md-10">
+                                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" required ng-model="$ctrl.auth.email" ng-disabled="$ctrl.progress || $ctrl.blocked" autocomplete="off">
+                                <div ng-messages="auth.email.$error" ng-if="$ctrl.isHasError('email')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите email</div>
+                                    <div ng-message="email" class="form__message--error">Неправильный формат адреса электронной почты</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('password') }">
+                            <label for="inputPassword" class="col-md-2 control-label">Пароль</label>
+                            <div class="col-xs-12 col-sm-12 col-md-10">
+                                <input type="password" class="form-control" id="inputPassword" name="password" required placeholder="Пароль" ng-model="$ctrl.auth.password" ng-minlength="6" ng-disabled="$ctrl.progress || $ctrl.blocked" autocomplete="off">
+                                <div ng-messages="auth.password.$error" ng-if="$ctrl.isHasError('password')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите пароль</div>
+                                    <div ng-message="minlength" class="form__message--error">Не менее шести символов</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-primary" ng-disabled="auth.$invalid || $ctrl.progress || $ctrl.blocked">
+                                    <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.progress"></i> Регистрация
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

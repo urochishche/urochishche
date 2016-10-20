@@ -5,6 +5,7 @@ var webpack = require ('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     context: path.join(__dirname, '/'),
@@ -45,6 +46,14 @@ module.exports = {
         extensions: ['', '.js']
     },
 
+    postcss: function() {
+        return [
+            autoprefixer({
+                browsers: ['last 3 versions']
+            })
+        ];
+    },
+
     module: {
         loaders: [
             {
@@ -56,16 +65,16 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/, 
-                loader: ExtractTextPlugin.extract('css?sourceMap')
+                test: /\.html/, 
+                loader: 'html'
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('css?sourceMap!less?sourceMap')
-            }, 
+                loader: ExtractTextPlugin.extract('css?minimize&sourceMap!postcss!less?sourceMap')
+            },
             {
-                test: /\.html/, 
-                loader: 'html'
+                test: /\.css$/, 
+                loader: ExtractTextPlugin.extract('css?minimize&sourceMap!postcss')
             }
         ]
     },

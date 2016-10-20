@@ -2,6 +2,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="page-header">
+                    <h1>{{ $ctrl.userName }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="thumbnail text-center">
+                    <img ng-src="{{ $ctrl.photoURL }}" ng-if="$ctrl.photoURL">
+                    <i class="fa fa-12x fa-user fa--user" aria-hidden="true" ng-if="!$ctrl.photoURL"></i>
+                </div>
+                <p class="text-center">
+                    <strong>{{ $ctrl.email }}</strong>
+                </p>
+            </div>
+            <div class="col-md-10">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group" role="group">
                         <a ui-sref="object.new" class="btn btn-primary">Добавить объект</a>

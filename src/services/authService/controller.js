@@ -21,7 +21,7 @@ export default class AuthServiceController {
     }
 
     onAuthStateChanged(callback) {
-        this.auth.$onAuthStateChanged(callback);
+        return this.auth.$onAuthStateChanged(callback);
     }
 
     signInWithEmailAndPassword(email, password) {
@@ -33,5 +33,24 @@ export default class AuthServiceController {
 
     signOut() {
         this.auth.$signOut();
+    }
+
+    createUser(options) {
+        const { email, password, name, photoURL } = options;
+        return this.auth.$createUserWithEmailAndPassword(email, password)
+            .then((user) => {
+                // user.sendEmailVerification()
+                //     .then(() => {
+                //         debugger;
+                //     })
+                //     .cath(() => {
+                //         debugger;
+                //     })
+
+                return user.updateProfile({
+                    displayName: name,
+                    photoURL
+                });
+            });
     }
 };

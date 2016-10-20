@@ -24,6 +24,7 @@
                 <li ng-class="{ active: $ctrl.state.user }" ng-if="$ctrl.auth">
                     <a ui-sref="user">
                         <i class="fa fa-user" aria-hidden="true"></i>
+                        {{ $ctrl._getUserName() }}
                     </a>
                 </li>
                 <li ng-if="$ctrl.auth">

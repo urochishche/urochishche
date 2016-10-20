@@ -41,8 +41,17 @@ export default class NavbarController {
             this._initState();
         });
 
-        this.AuthService.onAuthStateChanged(() => {
+        const unsubscribe = this.AuthService.onAuthStateChanged(() => {
             this._initAuth();
         });
+
+        this.$scope.$on('$destroy', () => {
+            unsubscribe();
+        });
+    }
+
+    _getUserName() {
+        const auth = this.AuthService.getAuth();
+        return auth ? auth.displayName : null;
     }
 }

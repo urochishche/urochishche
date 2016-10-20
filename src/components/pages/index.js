@@ -5,6 +5,8 @@ import home from './home';
 import object from './object';
 import rating from './rating';
 import about from './about';
+import register from './register';
+import recover from './recover';
 
 export default angular.module('app.components.pages', [
     login.name,
@@ -12,5 +14,7 @@ export default angular.module('app.components.pages', [
     home.name,
     object.name,
     rating.name,
-    about.name
+    about.name,
+    register.name,
+    recover.name
 ]);
