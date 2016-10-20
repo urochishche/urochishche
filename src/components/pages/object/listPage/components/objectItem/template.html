@@ -1,0 +1,19 @@
+<div class="panel panel-default panel--card">
+    <div class="panel-heading">
+        <a ui-sref="object.card({ id: $ctrl.object.$id })">{{ $ctrl.object.name }}</a>
+    </div>
+    <div class="panel-body">
+        {{ $ctrl.object.description }}
+        <div class="object__description--empty" ng-if="!$ctrl.object.description">
+            Описание не задано
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="object__info">
+            посещений <span class="badge">{{ $ctrl.object.visitors }}</span>
+        </div>
+        <div class="object__info">
+            труднодоступность <span class="badge">{{ $ctrl.object.inaccessibility }}</span>
+        </div>
+    </div>
+</div>

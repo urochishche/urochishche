@@ -28,25 +28,7 @@
             </div>
             <div class="col-md-10">
                 <div ng-repeat="item in $ctrl.list">
-                    <div class="panel panel-default panel--card">
-                        <div class="panel-heading">
-                            <a ui-sref="object.card({ id: item.$id })">{{ item.name }}</a>
-                        </div>
-                        <div class="panel-body">
-                            {{ item.description }}
-                            <div class="object__description--empty" ng-if="!item.description">
-                                Описание не задано
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="object__info">
-                                посещений <span class="badge">{{ item.visitors }}</span>
-                            </div>
-                            <div class="object__info">
-                                труднодоступность <span class="badge">{{ item.inaccessibility }}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <object-list-item object="item"></object-list-item>
                 </div>
                 <div ng-if="!$ctrl.list.length">
                     <div class="alert alert-info">
