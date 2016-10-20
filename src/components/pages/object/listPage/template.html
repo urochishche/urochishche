@@ -2,7 +2,7 @@
     <progress-bar text="Загрузка списка объектов ..." ng-if="$ctrl.loadProgress"></progress-bar>
     <div class="container" ng-if="!$ctrl.loadProgress">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <form>
                     <div class="form-group">
                         <label for="inaccessibility">Сложность</label>
@@ -26,7 +26,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div ng-repeat="item in $ctrl.list">
                     <object-list-item object="item"></object-list-item>
                 </div>

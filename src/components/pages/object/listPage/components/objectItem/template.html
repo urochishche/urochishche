@@ -1,19 +1,59 @@
-<div class="panel panel-default panel--card">
-    <div class="panel-heading">
+<!-- <div class="panel panel-default panel--card"> -->
+    <!-- <div class="panel-heading">
         <a ui-sref="object.card({ id: $ctrl.object.$id })">{{ $ctrl.object.name }}</a>
-    </div>
-    <div class="panel-body">
+    </div> -->
+    <!-- <div class="panel-body">
         {{ $ctrl.object.description }}
         <div class="object__description--empty" ng-if="!$ctrl.object.description">
             Описание не задано
         </div>
-    </div>
-    <div class="panel-footer">
+    </div> -->
+    <!-- <div class="panel-footer">
         <div class="object__info">
             посещений <span class="badge">{{ $ctrl.object.visitors }}</span>
         </div>
         <div class="object__info">
             труднодоступность <span class="badge">{{ $ctrl.object.inaccessibility }}</span>
+        </div>
+    </div> -->
+<!-- </div> -->
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <i class="fa fa-12x fa-picture-o icon--object" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <i class="fa fa-12x fa-picture-o icon--object" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="objectList__item">
+    <div class="item__image">
+        <i class="fa fa-12x fa-tree icon--object" aria-hidden="true"></i>
+    </div>
+    <div class="item__content">
+        <div class="content__mainRow">
+            <div class="mainRow__main">
+                <h3 class="title">
+                    <a ui-sref="object.card({ id: $ctrl.object.$id })">{{ $ctrl.object.name }}</a>
+                    <i class="fa fa-star icon--star" aria-hidden="true"></i>
+                    <i class="fa fa-star icon--star" aria-hidden="true"></i>
+                    <i class="fa fa-star icon--star" aria-hidden="true"></i>
+                </h3>
+            </div>
+            <div class="mainRow__review">
+                <div>
+                    <div>Хорошее место 7,7</div>
+                    <div>Труднодоступность {{ $ctrl.object.inaccessibility }}</div>
+                    <div>{{ $ctrl.object.visitors }} посещений</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            {{ $ctrl.object.description }}
         </div>
     </div>
 </div>
