@@ -1,18 +1,8 @@
-// .panel--card {
-//     .object__description--empty {
-//         color: #aaaaaa;
-//     }
-
-//     .object__info {
-//         display: inline-block;
-//         font-size: small;
-//         padding: 4px;
-//     }
-// }
-
-
-
 .objectList__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
     margin: 12px 0;
     padding: 12px;
     border: 1px solid #dddddd;
@@ -35,8 +25,13 @@
 
     .item__image,
     .item__content {
-        display: inline-block;
-        vertical-align: top;
+        
+    }
+
+    .item__content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .item__image {
@@ -46,13 +41,60 @@
     }
 
     .content__mainRow {
+        display: flex;
+        height: 80px;
+
         .title {
             margin: 0;
         }
     }
 
-    .mainRow__main,
+    .mainRow__main {
+        width: 100%;
+    }
+
     .mainRow__review {
-        display: inline-block;
+        .review__content {
+            position: absolute;
+            right: 28px;
+        }
+
+        .review__rating {
+            text-align: right;
+            font-size: large;
+            font-weight: bold;
+            color: #1078e0;
+        }
+
+        .review__inaccessibility {
+            text-align: right;
+            font-size: large;
+            color: #6989a9;
+        }
+
+        .review__visitors {
+            text-align: right;
+            font-size: small;
+            color: #888888;
+        }
+    }
+
+    .content__description {
+        height: 100px;
+        overflow: auto;
+    }
+
+    .content__description--empty {
+        height: 96px;
+        text-align: center;
+        line-height: 96px;
+        border: 1px dashed #ddd;
+        color: #aaa;
+    }
+
+    .content__button {
+        height: 40px;
+        line-height: 40px;
+        text-align: right;
     }
 }
