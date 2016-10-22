@@ -11,7 +11,15 @@ export default angular.module('app.components.pages.user', [
         $stateProvider
             .state('user', {
                 url: '/user',
-                template: '<user-page />'
+                template: '<user-page />',
+                resolve: {
+                    authResolve
+                }
             });
     })
     .component('userPage', component);
+
+function authResolve(AuthService) {
+    'ngInject';
+    return AuthService.requireSignIn();
+}

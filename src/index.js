@@ -38,7 +38,6 @@ angular.module('app', [
         'ngInject';
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-            console.error('stateChangeError:', error);
             if (error === 'AUTH_REQUIRED') {
                 $state.go('home');
             }

@@ -39,18 +39,18 @@ export default class AuthServiceController {
         const { email, password, name, photoURL } = options;
         return this.auth.$createUserWithEmailAndPassword(email, password)
             .then((user) => {
-                // user.sendEmailVerification()
-                //     .then(() => {
-                //         debugger;
-                //     })
-                //     .cath(() => {
-                //         debugger;
-                //     })
-
                 return user.updateProfile({
                     displayName: name,
                     photoURL
+                })
+                .then(() => {
+                    return user;
                 });
             });
+    }
+
+    removeUser(options) {
+        const { email, password } = options;
+        return this.auth.$deleteUser();
     }
 };

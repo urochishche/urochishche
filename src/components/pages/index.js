@@ -7,6 +7,7 @@ import rating from './rating';
 import about from './about';
 import register from './register';
 import recover from './recover';
+import removeUser from './removeUser';
 
 export default angular.module('app.components.pages', [
     login.name,
@@ -16,5 +17,6 @@ export default angular.module('app.components.pages', [
     rating.name,
     about.name,
     register.name,
-    recover.name
+    recover.name,
+    removeUser.name
 ]);

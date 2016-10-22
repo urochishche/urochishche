@@ -1,10 +1,12 @@
 export default class RegisterController {
-    constructor($scope, $state, AuthService) {
+    constructor($scope, $state, AuthService, RatingService) {
         'ngInject';
 
         this.$scope = $scope;
         this.$state = $state;
+
         this.AuthService = AuthService;
+        this.RatingService = RatingService;
     }
 
     submit() {
@@ -15,6 +17,9 @@ export default class RegisterController {
                 password,
                 name,
                 photoURL
+            })
+            .then((user) => {
+                return this.RatingService.addUser(user);
             })
             .then(() => {
                 this._gotoUserState();
@@ -67,10 +72,6 @@ export default class RegisterController {
     isHasError(attrName) {
         const item = this.$scope.auth[attrName];
         return item.$invalid && item.$dirty && item.$touched;
-    }
-
-    comparePassword() {
-        debugger;
     }
 
     _startProgress() {

@@ -1,0 +1,41 @@
+<div class="page page--removeUser">
+    <div class="container">
+        <div class="container__message">
+            <div class="alert alert-warning alert-dismissible" role="alert" ng-if="$ctrl.errorMessage">
+                <button type="button" class="close" ng-click="$ctrl.hideErrorMessage()" ng-disabled="$ctrl.blocked" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Ошибка!</strong> {{ $ctrl.errorMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container__form">
+            <div class="well">
+                <form name="auth" class="form-horizontal from--auth" ng-submit="$ctrl.submit()">
+                    <fieldset>
+                        <legend>Удаление аккаунта</legend>
+                        
+                        <div class="form-group" ng-class="{ 'has-error' : $ctrl.isHasError('password') }">
+                            <label for="inputPassword" class="col-md-2 control-label">Пароль</label>
+                            <div class="col-xs-12 col-sm-12 col-md-10">
+                                <input type="password" class="form-control" id="inputPassword" name="password" required placeholder="Введите пароль" ng-model="$ctrl.auth.password" ng-disabled="$ctrl.progress || $ctrl.blocked" autocomplete="off">
+                                <div ng-messages="auth.password.$error" ng-if="$ctrl.isHasError('password')" role="alert">
+                                    <div ng-message="required" class="form__message--error">Введите пароль</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-danger" ng-disabled="auth.$invalid || $ctrl.progress || $ctrl.blocked">
+                                    <i class="fa fa-lg fa-spinner fa-spin" ng-if="$ctrl.progress"></i> Удалить
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

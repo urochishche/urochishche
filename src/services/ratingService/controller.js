@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
 export default class RatingService {
-    constructor($q, $firebaseArray, $firebaseObject, ObjectService, UserService) {
+    constructor($q, $firebaseArray, $firebaseObject, ObjectService) {
         'ngInject';
 
         this.database = firebase.database();
@@ -11,51 +11,58 @@ export default class RatingService {
         this.$firebaseObject = $firebaseObject;
 
         this.ObjectService = ObjectService;
-        this.UserService = UserService;
+    }
+
+    removeUser(uid) {
+        const ref = this.database.ref(`rating/${uid}`)
+        const obj = this.$firebaseObject(ref);
+        return obj.$remove();
+    }
+
+    addUser(user) {
+        const ref = this.database.ref(`rating/${user.uid}`)
+        const obj = this.$firebaseObject(ref);
+        Object.assign(obj, {
+            name: user.displayName,
+            createTimestamp: Date.now()
+        });
+        return obj.$save();
     }
 
     loadRating() {
         const ref = this.database.ref('rating');
         const list = this.$firebaseArray(ref);
 
-        let ratingList;
-        let objectList;
-
         return this.$q.all([
                 list.$loaded(),
                 this.ObjectService.loadObjects()
             ])
             .then(result => {
-                ratingList = result[0];
-                objectList = result[1];
+                const ratingList = result[0];
+                const objectList = result[1];
 
-                const requests = ratingList.map(item => {
-                    return this.UserService.getUser(item.$id);
-                });
-
-                return this.$q.all(requests);
-            })
-            .then(users => {
                 return ratingList.map(item => {
                     let visits = 0;
+                    let rating = 0;
+                    let objects = [];
 
-                    const rating = Object.keys(item.objects).reduce((sum, key) => {
-                        const count = item.objects[key];
-                        const object = this._findObjectByKey(objectList, key);
-                        visits += count;
-                        return sum + count * parseInt(object.inaccessibility, 10);
-                    }, 0);
+                    if (item.objects) {
+                        rating = Object.keys(item.objects).reduce((sum, key) => {
+                            const count = item.objects[key];
+                            const object = this._findObjectByKey(objectList, key);
+                            visits += count;
+                            return sum + count * parseInt(object.inaccessibility, 10);
+                        }, 0);
 
-                    const objects = Object.keys(item.objects).map(key => {
-                        const object = this._findObjectByKey(objectList, key);
-                        const count = item.objects[key];
-                        return Object.assign({}, object, { count });
-                    });
-
-                    const user = this._findUserById(users, item.$id);
+                        objects = Object.keys(item.objects).map(key => {
+                            const object = this._findObjectByKey(objectList, key);
+                            const count = item.objects[key];
+                            return Object.assign({}, object, { count });
+                        });
+                    }
 
                     return {
-                        user,
+                        userName: item.name,
                         objects,
                         rating,
                         visits
@@ -68,14 +75,6 @@ export default class RatingService {
         let result;
         objects.some(item => {
             return (item.$id === key) && (result = item);
-        });
-        return result;
-    }
-
-    _findUserById(users, id) {
-        let result;
-        users.some(item => {
-            return (item.id === id) && (result = item);
         });
         return result;
     }

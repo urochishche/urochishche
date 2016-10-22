@@ -1,7 +1,8 @@
 export default class RatingPageController {
-    constructor(RatingService) {
+    constructor(RatingService, DeclensionService) {
         'ngInject';
 
+        this.DeclensionService = DeclensionService;
         this._loadRating(RatingService);
     }
 
@@ -25,26 +26,10 @@ export default class RatingPageController {
     }
 
     _getPointsText(value) {
-        let result;
-        if (value === 1) {
-            result = 'балл';
-        } else if (value < 5) {
-            result = 'балла';
-        } else {
-            result = 'баллов';
-        }
-        return result;
+        return this.DeclensionService.getPointsText(value);
     }
 
     _getValueText(value) {
-        let result;
-        if (value === 1) {
-            result = 'раз';
-        } else if (value < 5) {
-            result = 'раза';
-        } else {
-            result = 'раз';
-        }
-        return result;
+        return this.DeclensionService.getValueText(value);
     }
 };
