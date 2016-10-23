@@ -27,7 +27,7 @@ module.exports = extend({}, config, {
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath:  './',
-        filename: 'bundle.js'
+        filename: 'bundle.[chunkhash].js'
     },
 
     htmlLoader: {
