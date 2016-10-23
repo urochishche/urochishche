@@ -3,28 +3,11 @@
     <div class="container" ng-if="!$ctrl.loadProgress">
         <div class="row">
             <div class="col-md-3">
-                <form>
-                    <div class="form-group">
-                        <label for="inaccessibility">Сложность</label>
-                        <select class="form-control" id="inaccessibility" ng-model="$ctrl.filter.inaccessibility">
-                            <option value="{{n}}" ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{n}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="visitors">Посещения</label>
-                        <select class="form-control" id="visitors" ng-model="$ctrl.filter.visitors">
-                            <option value="1">меньше 5</option>
-                            <option value="2">от 5 до 10</option>
-                            <option value="3">больше 10</option>
-                        </select>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default" ng-click="$ctrl.applyFilter()">Применить</button>
-                        <button type="button" class="btn btn-default" ng-click="$ctrl.clearFilter()" ng-if="$ctrl.filter.active">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </form>
+                <object-list-filter 
+                    filter="$ctrl.filter"
+                    apply-filter="$ctrl.applyFilter()"
+                    clear-filter="$ctrl.clearFilter()"
+                />
             </div>
             <div class="col-md-9">
                 <div ng-repeat="item in $ctrl.list">

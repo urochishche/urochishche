@@ -1,0 +1,28 @@
+<div class="objectList__filter">
+    <div class="panel panel-default panel--filter">
+        <div class="panel-body">
+            <form class="filter__form">
+                <div class="form-group">
+                    <label class="form__label" for="inaccessibility">Труднодоступность</label>
+                    <select class="form-control" id="inaccessibility" ng-model="$ctrl.filter.inaccessibility">
+                        <option value="{{n}}" ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{n}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form__label" for="visitors">Посещения</label>
+                    <select class="form-control" id="visitors" ng-model="$ctrl.filter.visitors">
+                        <option value="1">меньше 5</option>
+                        <option value="2">от 5 до 10</option>
+                        <option value="3">больше 10</option>
+                    </select>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary" ng-click="$ctrl.applyFilter()">Найти</button>
+                    <button type="button" class="btn btn-primary" ng-click="$ctrl.clearFilter()" ng-if="$ctrl.filter.active">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

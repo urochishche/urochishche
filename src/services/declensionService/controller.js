@@ -27,4 +27,16 @@ export default class DeclensionService {
         }
         return result;
     }
+
+    getVisitorsText(value) {
+        let result;
+        if (value === 1) {
+            result = 'посещение';
+        } else if (value < 5) {
+            result = 'посещения';
+        } else {
+            result = 'посещений';
+        }
+        return result;
+    }
 }
