@@ -1,32 +1,33 @@
 <div class="page page--rating">
     <progress-bar text="Загрузка списка пользователей ..." ng-if="$ctrl.loadProgress"></progress-bar>
     <div class="container" ng-if="!$ctrl.loadProgress">
-        <div ng-repeat="item in $ctrl.list">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="user">
-                        <div class="user__rating">
-                            <span class="label label-primary">{{ item.rating }} {{ $ctrl._getPointsText(item.rating) }}</span>
-                        </div>
-                        <div class="user__image">
-                            <i class="fa fa-user fa-4x" aria-hidden="true"></i>
-                        </div>
-                        <div class="user__name">
-                            {{ item.userName }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-10">
-                    <ul class="objects__list">
-                        <li class="list__item" ng-repeat="object in item.objects | orderBy: 'count'">
-                            <a ui-sref="object.card({ id: object.$id })">{{ object.name }}</a>
-                            <span class="label label-default">{{ object.count }} {{ $ctrl._getValueText(object.count) }}</span>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                            <span class="label label-default">{{ object.inaccessibility }} {{ $ctrl._getPointsText(object.inaccessibility) }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="panel panel-default">
+            <table class="table table-striped">
+                <thead>
+                    <th>
+                        Место в рейтинге
+                    </th>
+                    <th>Имя</th>
+                    <th>Список объектов</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in $ctrl.list">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ item.userName }}</td>
+                        <td>
+                            <ul class="objects__list">
+                                <li class="list__item" ng-repeat="object in item.objects | orderBy: 'count'">
+                                    <a ui-sref="object.card({ id: object.$id })">{{ object.name }}</a>
+                                    <span class="label label-default">
+                                        {{ object.count }} {{ $ctrl._getValueText(object.count) }} х 
+                                        {{ object.inaccessibility }} {{ $ctrl._getPointsText(object.inaccessibility) }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

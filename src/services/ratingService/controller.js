@@ -86,11 +86,12 @@ export default class RatingService {
 
         return obj.$loaded()
             .then(result => {
+                if (!result.objects) {
+                    result.objects = {};
+                }
                 const value = result.objects[objectId];
                 result.objects[objectId] = value ? value + 1 : 1;
-                Object.assign(result, {
-                    editTimestamp: Date.now()
-                });
+                result.editTimestamp = Date.now();
                 return obj.$save();
             })
             .then(() => {
